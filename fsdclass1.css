@@ -1,0 +1,13 @@
+body{
+    background-color: antiquewhite;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
+    margin-top: 10px;
+}
+h1{
+    color: crimson;
+}
+p{
+    color: rgb(5, 5, 46);
+    font-size: larger;
+}

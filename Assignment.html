@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASSIGNMENT</title>
+    <style>
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #315476;
+            color: white;
+            padding: 15px 30px;
+        }
+        img{
+            width:100%; height: 500px;
+            margin: 20px auto 0;
+            object-fit: cover;
+        }
+        body{
+            background-color: white;
+            display: flex;
+            justify-content:center ;
+            padding: 10px;
+        }
+        .container{
+            width: 90%;
+            border: 2px solid black;
+        }
+        .head{
+            text-align: center;
+            padding: 20px;
+        }
+        .body{
+            display: flex;
+        }
+        .left{
+            width: 70%;
+            border-right: 2px solid black;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .image,.video{
+            width:500px;  height: 450px;
+        }
+        .right{
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .box{
+            width: 120px; height: 50px; display:flex; justify-content: center; align-items: center; border: 2px solid black; background-color: aqua;
+        }
+        .footer{
+            height: 70px;
+            border-top: 2px solid black;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <div class="head">ABES ENGINEERING COLLEGE</div>
+        <div class="icons">
+            <button>login</button>
+            <button>signup</button>
+        </div>
+
+    </header>
+    <hr>
+    <img src="https://www.abes.ac.in/assets/2.jpg"
+    ><hr>
+    <div class="body">
+        <div class="left">
+            <p>ABES ENGINEERING COLLEGE... welcome to this college, you will going to learn a lot of new things here.... </p>
+            <div class="image">
+                <img src="https://gyanamconsultancy.com/public/images/college/college_image_1762407517.jpg">
+            </div><br>
+            <div class="video">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/vGoiqOA6O2g?si=OLzbMpWWO2EpTVLG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="right">
+            <div class="box">SEC A</div>
+            <div class="box">SEC B</div>
+            <div class="box">SEC C</div>
+            <div class="box">SEC D</div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; HARSHITA BHARDWAJ</p>
+    </div>
+</div>
+</body>
+</html>

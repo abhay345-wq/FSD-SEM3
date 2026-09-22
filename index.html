@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Node.js FSD Activity</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 0 20px;
+            background: #f6f7fb;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        section {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 18px;
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        button {
+            margin: 4px 6px 4px 0;
+            padding: 8px 14px;
+            border: none;
+            border-radius: 6px;
+            background: #4f46e5;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #4338ca;
+        }
+
+        input {
+            padding: 7px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-right: 6px;
+        }
+
+        pre {
+            background: #111;
+            color: #7fffa0;
+            padding: 10px;
+            border-radius: 6px;
+            overflow-x: auto;
+            min-height: 20px;
+        }
+
+        #log {
+            background: #222;
+            color: #ddd;
+            font-size: 13px;
+            padding: 10px;
+            border-radius: 6px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Node.js FSD Activity</h1>
+
+    <!-- 1. EventEmitter demo -->
+    <section>
+        <h2>1. Custom EventEmitter</h2>
+
+        <input id="nameInput" placeholder="Your name" value="Student">
+
+        <button onclick="callGreet()">
+            Trigger "greet"
+        </button>
+
+        <button onclick="callExit()">
+            Trigger "exit"
+        </button>
+
+        <pre id="emitterOutput"></pre>
+    </section>
+
+
+    <!-- 2. DOM-like event handling -->
+    <section>
+        <h2>2. DOM-like Event Handling (in the browser)</h2>
+
+        <button id="domBtn">
+            Click me
+        </button>
+
+        <pre id="domOutput"></pre>
+    </section>
+
+
+    <!-- 3. Event loop visualization -->
+    <section>
+        <h2>
+            3. Event Loop:
+            setTimeout vs setImmediate vs process.nextTick
+        </h2>
+
+        <button onclick="runEventLoop()">
+            Run Event Loop Demo
+        </button>
+
+        <pre id="eventLoopOutput"></pre>
+    </section>
+
+
+    <!-- 4. fs CRUD -->
+    <section>
+        <h2>4. File CRUD (fs module)</h2>
+
+        <input
+            id="fileText"
+            placeholder="Text for the file"
+        >
+
+        <br>
+
+        <button onclick="createFile()">
+            Create
+        </button>
+
+        <button onclick="readFile()">
+            Read
+        </button>
+
+        <button onclick="updateFile()">
+            Update (append)
+        </button>
+
+        <button onclick="deleteFile()">
+            Delete (clear)
+        </button>
+
+        <pre id="fileOutput"></pre>
+    </section>
+
+
+    <!-- 5. HTTP server response information -->
+    <section>
+        <h2>Live Request Log</h2>
+
+        <div id="log">
+            Waiting for actions...
+        </div>
+    </section>
+
+    <script>
+
+        // -----------------------------------------
+        // Live Request Log
+        // -----------------------------------------
+
+        const logBox = document.getElementById('log');
+
+        function log(msg) {
+
+            const time = new Date().toLocaleTimeString();
+
+            logBox.innerHTML =
+                `[${time}] ${msg}<br>` +
+                logBox.innerHTML;
+        }
+
+
+        // -----------------------------------------
+        // 1. EventEmitter
+        // -----------------------------------------
+
+        async function callGreet() {
+
+            const name =
+                document.getElementById('nameInput').value ||
+                'Guest';
+
+            const res =
+                await fetch(
+                    `/greet?name=${encodeURIComponent(name)}`
+                );
+
+            const data =
+                await res.json();
+
+            document.getElementById(
+                'emitterOutput'
+            ).textContent =
+                JSON.stringify(data, null, 2);
+
+            log(
+                `GET /greet -> status ${res.status}`
+            );
+        }
+
+
+        async function callExit() {
+
+            const res =
+                await fetch('/exit');
+
+            const data =
+                await res.json();
+
+            document.getElementById(
+                'emitterOutput'
+            ).textContent =
+                JSON.stringify(data, null, 2);
+
+            log(
+                `GET /exit -> status ${res.status}`
+            );
+        }
+
+
+        // -----------------------------------------
+        // 2. DOM-like Custom Events
+        // -----------------------------------------
+
+        const domBtn =
+            document.getElementById('domBtn');
+
+        const domOutput =
+            document.getElementById('domOutput');
+
+
+        // Standard DOM event listener
+
+        domBtn.addEventListener(
+            'click',
+            () => {
+
+                domOutput.textContent =
+                    'Native "click" event caught by addEventListener!';
+
+
+                // Dispatch our own CustomEvent
+
+                const myEvent =
+                    new CustomEvent(
+                        'studentClicked',
+                        {
+                            detail: {
+                                time: Date.now()
+                            }
+                        }
+                    );
+
+                domBtn.dispatchEvent(myEvent);
+            }
+        );
+
+
+        // Listening for our custom event
+
+        domBtn.addEventListener(
+            'studentClicked',
+            (e) => {
+
+                domOutput.textContent +=
+                    `\nCustom event "studentClicked" fired at ${e.detail.time}`;
+            }
+        );
+
+
+        // -----------------------------------------
+        // 3. Event Loop Demo
+        // -----------------------------------------
+
+        async function runEventLoop() {
+
+            document.getElementById(
+                'eventLoopOutput'
+            ).textContent = 'Running...';
+
+
+            const res =
+                await fetch('/eventloop');
+
+
+            const data =
+                await res.json();
+
+
+            document.getElementById(
+                'eventLoopOutput'
+            ).textContent =
+                data.order.join('\n');
+
+
+            log(
+                `GET /eventloop -> status ${res.status}`
+            );
+        }
+
+
+        // -----------------------------------------
+        // 4. File CRUD
+        // -----------------------------------------
+
+        // CREATE
+
+        async function createFile() {
+
+            const text =
+                document.getElementById(
+                    'fileText'
+                ).value;
+
+
+            const res =
+                await fetch(
+                    '/create',
+                    {
+                        method: 'POST',
+
+                        headers: {
+                            'Content-Type':
+                                'application/json'
+                        },
+
+                        body: JSON.stringify({
+                            text: text
+                        })
+                    }
+                );
+
+
+            const data =
+                await res.json();
+
+
+            document.getElementById(
+                'fileOutput'
+            ).textContent =
+                JSON.stringify(data, null, 2);
+
+
+            log(
+                `POST /create -> status ${res.status}`
+            );
+        }
+
+
+        // READ
+
+        async function readFile() {
+
+            const res =
+                await fetch('/read');
+
+
+            const data =
+                await res.json();
+
+
+            document.getElementById(
+                'fileOutput'
+            ).textContent =
+                JSON.stringify(data, null, 2);
+
+
+            log(
+                `GET /read -> status ${res.status}`
+            );
+        }
+
+
+        // UPDATE
+
+        async function updateFile() {
+
+            const text =
+                document.getElementById(
+                    'fileText'
+                ).value;
+
+
+            const res =
+                await fetch(
+                    '/update',
+                    {
+                        method: 'PUT',
+
+                        headers: {
+                            'Content-Type':
+                                'application/json'
+                        },
+
+                        body: JSON.stringify({
+                            text: text
+                        })
+                    }
+                );
+
+
+            const data =
+                await res.json();
+
+
+            document.getElementById(
+                'fileOutput'
+            ).textContent =
+                JSON.stringify(data, null, 2);
+
+
+            log(
+                `PUT /update -> status ${res.status}`
+            );
+        }
+
+
+        // DELETE
+
+        async function deleteFile() {
+
+            const res =
+                await fetch(
+                    '/delete',
+                    {
+                        method: 'DELETE'
+                    }
+                );
+
+
+            const data =
+                await res.json();
+
+
+            document.getElementById(
+                'fileOutput'
+            ).textContent =
+                JSON.stringify(data, null, 2);
+
+
+            log(
+                `DELETE /delete -> status ${res.status}`
+            );
+        }
+
+    </script>
+
+</body>
+
+</html>

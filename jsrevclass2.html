@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript revsion class 2</title>
+</head>
+<body>
+    <h2>Template Literals Example</h2>    
+    <button onclick="runCode8()">Run Code</button>    
+    <p id="result8"></p>    
+    <h2>DOM Manipulation Example</h2> 
+    <button onclick="runCode9()">Run Code</button> 
+    <p id="demoText">This text will change when you click Run.</p> 
+    <h2>Classes Example</h2>
+    <button onclick="runCode10()">Run Code</button>
+    <p id="result10"></p>
+
+    //REMOVE ITEMS ON CLICK
+    <ul id="taskList">
+        <li>Sample Task 1</li>
+        <li>Sample Task 2</li>
+    </ul>
+
+    <script> 
+        /*
+        <h1>JAVA SCRIPT MODULES - CLASS 2</h1>
+
+        //Literal Examples    
+        function runCode8() {        
+            let name = "Riya";       
+            let marks = 88;        
+            // old way: "Name: " + name + ", Marks: " + marks       
+            // new way: use backticks ` ` and ${ } to insert variables directly       
+            let message = `Name: ${name}, Marks: ${marks}`;        
+            //showing result on the page       
+            document.getElementById("result8").innerText = message;     
+        }   
+
+        //Dom Manipulation
+        function runCode9() { 
+            // document.getElementById finds an element on the page by its id       
+            // innerText changes the text shown 
+            document.getElementById("demoText").innerText = "Hello! JavaScript changed this text."; 
+            // style.color changes the text color
+            document.getElementById("demoText").style.color = "green";     
+        } 
+
+        //classes
+        function runCode10() { 
+            class Student {
+                constructor(name, marks) {
+                    this.name = name;           
+                    this.marks = marks;         
+                } 
+                showResult() { 
+                    return this.name + " scored " + this.marks; 
+                }
+            }
+            let student1 = new Student("Karan", 78); 
+            document.getElementById("result10").innerText = student1.showResult();     
+        }
+        */
+        document.getElementById("taskList").addEventListener("click", (e) => {
+            if (e.target.tagName === "LI") {
+                e.target.remove();
+            }
+        });
+    </script> 
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript Revision class 1</title>
+</head>
+<body>
+    <h1>JAVA SCRIPT MODULES - CLASS 1</h1>
+    <button onclick="runCode()">SUM</button>
+    <p id="result"></p>
+    <button onclick="runCode2()">DATA TYPE </button>
+    <p id="result2"></p>
+    <button onclick="operator()">OPERATOR</button>
+    <p id="result3"></p>
+    <button onclick="ifelse()">IF-ELSE</button>
+    <p id="result4"></p>
+
+    <p id="result5"></p>
+    <button onclick="array()">ARRAY</button>
+    <p id="result6"></p>
+
+    <p id="result7"></p>
+    <button onclick="setupevent()">setup event (run only once)</button>
+    <button id="result8">CLICK ME</button>
+
+    <script>
+        //SUM
+        function runCode(){
+            let number1 = 10;
+            let number2 = 30;
+            let sum = number1+ number2;
+            document.getElementById("result").innerText="sum: " + sum;
+        }
+
+        //DATA TYPE
+        function runCode2(){
+            let age = 19;
+            let name = "Harshita";
+            let isStudent = true;
+            document.getElementById("result2").innerText="age type: " + typeof(age) +" | " + "name type: "+ typeof(name) +" | "+ "isStudent type: " + typeof(isStudent);
+        }
+        //OPERATOR
+        function operator(){
+            
+        }
+
+        //IF-ELSE
+        function ifelse(){
+            let marks = 72;
+            if(marks >= 90){
+                document.getElementById("result4").innerText="A";
+            }else if(marks<90 && marks>=70){
+                document.getElementById("result4").innerText="B";
+            }else{
+                document.getElementById("result4").innerText="F";
+            }
+        }
+
+        //CALLING OF FUNCTION BY PASSING PARAMETER
+        function parameter(x,y){
+            return x+y;
+        }
+        let sum = parameter(4,8);
+        document.getElementById("result5").innerText="Sum : "+ sum;
+
+        //ARRAY 
+        function array(){
+            let students = ["harshita", "aakriti", "anjali"];
+            let first = students[0];
+            let total = students.length;
+            students.push("avijit");
+            document.getElementById("result6").innerText="first element: "+first +" | " + "total length: " + total +" | " + "after add: " + students;
+        }
+
+        //OBJECT
+        let student = {
+            name: "Harshita",
+            age: 19,
+            marks: 99
+        };
+        document.getElementById("result7").innerText="Student name: "+ student.name + " | " + "Student age: "+" | "+ student.age + " | "+ "Student marks: "+ student.marks;
+
+        //EVENTS EXAMPLE
+        function setupevent(){
+            document.getElementById("result8").addEventListener("click",function(){
+                alert("You clicked the button!");
+            });
+        }
+    </script>
+</body>
+</html>
